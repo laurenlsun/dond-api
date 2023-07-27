@@ -1,17 +1,17 @@
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import psycopg2 as ps
 
 app = Flask(__name__)
 CORS(app)
 
-load_dotenv()
-db_host = os.getenv("YOUR_GOOGLE_CLOUD_PUBLIC_IP")
-db_user = os.getenv("YOUR_DATABASE_USERNAME")
-db_pass = os.getenv("YOUR_DATABASE_PASSWORD")
-db_name = os.getenv("YOUR_DATABASE_NAME")
+# load_dotenv()
+# db_host = os.getenv("YOUR_GOOGLE_CLOUD_PUBLIC_IP")
+# db_user = os.getenv("YOUR_DATABASE_USERNAME")
+# db_pass = os.getenv("YOUR_DATABASE_PASSWORD")
+# db_name = os.getenv("YOUR_DATABASE_NAME")
 
 
 @app.route("/")
