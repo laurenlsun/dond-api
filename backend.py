@@ -1,9 +1,18 @@
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import os
+from google.cloud import storage
+
 
 app = Flask(__name__)
 CORS(app)
+
+# Initialize the client
+client = storage.Client()
+# Get the bucket
+bucket = client.get_bucket('dond-b.online')
+# Create or get the file in the bucket
+blob = bucket.blob('data.txt')
 
 
 @app.route("/")
@@ -15,8 +24,11 @@ def home():
 def save_player():
     received_data = request.get_json()
     received_data = str(received_data)
-    blob.upload_from_string(received_data)
-    return jsonify({'message': 'Data received successfully'})
+    if blob is not None:
+        prior_data = blob.download_as_text()
+        new_data = prior_data + "\n" + received_data # append received data string
+        blob.upload_from_string(new_data)
+        return jsonify({'message': 'Data received and saved successfully'})
 
 
 if __name__ == "__main__":
