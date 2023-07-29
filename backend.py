@@ -31,6 +31,17 @@ def save_player():
         return jsonify({'message': 'Data received and saved successfully'})
 
 
+@app.route("/check_ids", methods=['POST'])
+def check_ids():
+    received_id = request.get_json()
+    id = str(received_id)
+    prior_data = blob.download_as_text()
+    if id in prior_data:
+        return jsonify({'result': "true"})
+    else:
+        return jsonify({'result': "false"})
+
+
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
     app.run(debug=True)
